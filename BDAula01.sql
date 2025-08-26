@@ -1,0 +1,92 @@
+create database BDAula01;
+use BDAula01;
+
+show databases;
+
+CREATE TABLE PESSOA (
+     id int AUTO_INCREMENT PRIMARY KEY,
+     nome varchar(50) NOT NULL,
+     sexo varchar(1) NOT NULL,
+     idioma varchar(10) NOT NULL
+     );
+
+show tables;
+desc PESSOA;
+
+  INSERT INTO PESSOA (nome,sexo,idioma)
+     VALUES
+    ("Ricardo","M","Portugues"),
+    ("Leonardo","M","Portugues"),
+    ("Britany","F","Ingles"),
+    ("Britany","F","Ingles"),
+    ("Gerald","M","Ingles"),
+    ("william","M","Ingles"),
+    ("Umberto","M","Espanhol"),
+    ("Jostein","M","Alemao"),
+    ("Stephen","M","Holandes");
+  
+
+select * from PESSOA;
+
+
+--NOVO BANCO DE DADOS ( SERA USADO NAS PROXIMAS AULAS )
+
+CREATE DATABASE escola;
+use escola;
+
+ create table ALUNOS(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(50) NOT NULL,
+    idade int NOT NULL,
+    curso varchar(50) NOT NULL
+    );
+
+INSERT INTO ALUNOS(nome,idade,curso)
+     VALUES
+     ('Joao',20,'Matematica'),
+     ('Maria',22,'Historia'),
+     ('Pedro',21,'Ciencia da Computaçao'),
+     ('Ana',19,'Biologia'),
+     ('Carlos',23,'Economia');
+
+create table Professores(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    nome varchar(50) NOT NULL,
+    idade int NOT NULL,
+    disciplina varchar(50) NOT NULL
+    );
+
+INSERT INTO professores(nome,idade,disciplina)
+     VALUES
+     ('Ricardo',33,'Desenvolvimento de Software'),
+     ('Zamberlan',39,'Pesquisa e Ordenaçao'),
+     ('Andre',27,'Modelagem e SImulaçao');
+
+create table Matriculas(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    id_aluno INT,
+    id_professor INT, 
+    data_matricula DATE,
+    FOREIGN KEY (id_aluno) REFERENCES ALUNOS(id),
+    FOREIGN KEY (id_professor) REFERENCES Professores(id) 
+    );
+
+INSERT INTO Matriculas(id_aluno,id_professor,data_matricula)
+    VALUES
+    (1,1,'2023-01-15'),
+    (2,2,'2023-02-20'),
+    (3,3,'2023-03-10'),
+    (4,1,'2023-04-05'),
+    (5,2,'2023-05-12');
+
+select * from matriculas;
+
+select nome, curso FROM alunos;
+
+select nome , disciplina from professores;
+
+
+    
+
+
+
