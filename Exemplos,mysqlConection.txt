@@ -1,0 +1,121 @@
+🔹 1. DriverManager (Classe)
+
+O que é: É a classe que gerencia os drivers JDBC.
+
+Função: Abre a conexão com o banco de dados.
+
+Como usar:
+
+Connection conn = DriverManager.getConnection(
+    "jdbc:mysql://localhost:3306/meu_banco", "usuario", "senha"
+);
+
+
+Onde usar: Sempre que precisar criar uma conexão inicial com o banco.
+
+🔹 2. Connection (Interface)
+
+O que é: Representa a conexão ativa com o banco.
+
+Função: É a "ponte" entre o Java e o banco de dados.
+
+Métodos importantes:
+
+createStatement() → cria um objeto Statement.
+
+prepareStatement(sql) → cria um objeto PreparedStatement.
+
+close() → fecha a conexão.
+
+Exemplo:
+
+Statement stmt = conn.createStatement();
+
+
+Onde usar: Toda vez que precisar executar comandos SQL. Sem ela, nada funciona.
+
+🔹 3. Statement (Interface)
+
+O que é: Objeto para enviar instruções SQL ao banco.
+
+Função: Executa consultas fixas, sem parâmetros.
+
+Exemplo:
+
+Statement stmt = conn.createStatement();
+ResultSet rs = stmt.executeQuery("SELECT * FROM clientes");
+
+
+Onde usar: Quando a SQL é simples e não precisa de parâmetros.
+
+🔹 4. PreparedStatement (Interface)
+
+O que é: É uma versão mais segura e rápida do Statement.
+
+Função: Permite parametrizar consultas e evita SQL Injection.
+
+Exemplo:
+
+String sql = "SELECT * FROM clientes WHERE id = ?";
+PreparedStatement ps = conn.prepareStatement(sql);
+ps.setInt(1, 10); // substitui o ? pelo valor 10
+ResultSet rs = ps.executeQuery();
+
+
+Onde usar: Sempre que precisar passar valores variáveis (input de usuário, filtros, etc.).
+
+🔹 5. ResultSet (Interface)
+
+O que é: Representa o resultado de uma consulta SQL.
+
+Função: Permite percorrer os dados retornados pelo banco.
+
+Exemplo:
+
+while(rs.next()) {
+    System.out.println(rs.getInt("id") + " - " + rs.getString("nome"));
+}
+
+
+Onde usar: Toda vez que você precisa ler dados de um SELECT.
+
+🔹 Fluxo Completo (Etapas)
+
+Abrir conexão com DriverManager → retorna um Connection.
+
+Criar um Statement ou PreparedStatement a partir do Connection.
+
+Executar a consulta (SQL).
+
+Obter os resultados em um ResultSet.
+
+Fechar tudo (ResultSet, Statement/PreparedStatement, Connection).
+
+🔹 Exemplo Prático (CRUD simples com PreparedStatement)
+import java.sql.*;
+
+public class ExemploJDBC {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/loja";
+        String usuario = "root";
+        String senha = "1234";
+
+        try (Connection conn = DriverManager.getConnection(url, usuario, senha)) {
+            // Inserir dado
+            String sql = "INSERT INTO clientes (nome, idade) VALUES (?, ?)";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "João");
+            ps.setInt(2, 25);
+            ps.executeUpdate();
+
+            // Consultar
+            ResultSet rs = conn.createStatement().executeQuery("SELECT * FROM clientes");
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("nome"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
