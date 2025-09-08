@@ -1,0 +1,35 @@
+CREATE DATABASE BANCO;
+USE BANCO;
+
+
+CREATE TABLE CLIENTE (
+     id int AUTO_INCREMENT PRIMARY KEY,
+     nome varchar(50) NOT NULL,
+     idade int NOT NULL,
+     saldo float NOT NULL
+);
+
+CREATE TABLE FUNCIONARIO (
+     id int AUTO_INCREMENT PRIMARY KEY,
+     nome varchar(50) NOT NULL,
+     idade int NOT NULL,
+     clientesAtendidos int NOT NULL
+);
+
+ INSERT INTO CLIENTE (nome,idade,saldo)
+     VALUES
+     ("Leonardo",19,500),
+     ("Leonardo",19,500),
+     ("Cristiane",56,5000),
+     ("Luciano",59,6700),
+     ("Pedro",23,700);
+
+ INSERT INTO FUNCIONARIOS (nome,idade,clientesAtendidos)
+     VALUES
+     ("Maria Tereza",59,0),
+     ("Marcelo",29,0),
+     ("Cristaldo",32,0),
+     ("Willian",29,0),
+     ("Pedro Ernesto",53,0);
+
+
