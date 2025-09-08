@@ -110,6 +110,29 @@ public class Excluir {
     }
 }
 
+// 6 . Get 
+public Aluno getAluno(int id){
+        String sql = "SELECT * FROM alunos WHERE id = ?";
+        try{
+            PreparedStatement stmt = conn.prepareStatement(sql,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_UPDATABLE);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            Aluno a = new Aluno();
+            if(rs.first()){
+                a.setId(id);
+                a.setNome(rs.getString("nome"));
+                a.setCurso(rs.getString("curso"));
+                a.setIdade(rs.getInt("idade"));
+            }
+            return a;
+        } catch(SQLException ex ){
+            System.out.println("Erro ao consultar aluno: " + ex.getMessage());
+            return null;
+        }
+    }
+
 
 //👉 Esses são os códigos básicos do JDBC que quase sempre caem em prova:
 
