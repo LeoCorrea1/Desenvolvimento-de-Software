@@ -133,8 +133,21 @@ public Aluno getAluno(int id){
         }
     }
 
+//✅ Resumo simplificado:
+//Esse método busca um aluno pelo id no banco de dados.
 
-//👉 Esses são os códigos básicos do JDBC que quase sempre caem em prova:
+//Monta a query SQL com ?.
+
+//Substitui ? pelo valor recebido.
+
+//Executa a consulta.
+
+//Se encontrar, cria um objeto Aluno com os dados do banco.
+
+//Retorna esse objeto.
+
+
+//👉 Esses são os códigos básicos do JDBC 
 
 //DriverManager.getConnection() → abrir conexão.
 
@@ -144,4 +157,4 @@ public Aluno getAluno(int id){
 
 //executeUpdate() → usado para INSERT, UPDATE e DELETE.
 
-executeQuery() → usado para SELECT.
+//executeQuery() → usado para SELECT.
