@@ -1,0 +1,23 @@
+create database BDAula01;
+use BDAula01;
+
+show databases;
+
+CREATE TABLE VEICULO (
+     placa varchar(50) PRIMARY KEY NOT NULL,
+     Marca varchar(50) NOT NULL,
+     Modelo varchar(50) NOT NULL,
+     ano int NOT NULL,
+     cor varchar(50) NOT NULL
+    );
+
+show tables;
+desc veiculo;
+
+  INSERT INTO veiculo (marca, modelo, ano, placa, cor)
+     VALUES
+    ("Fiat","Uno",2009,"ITB0Y05","Vermelho"),
+    ("Fiat","Pulse",2020,"DIU5P06","Prata");
+  
+
+select * from VEICULO;
