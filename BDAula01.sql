@@ -48,6 +48,12 @@ CREATE TABLE categorias (
     nome VARCHAR(100) NOT NULL
 );
 
+INSERT INTO Categorias (nome) VALUES
+("Eletrônicos"),
+("Alimentos"),
+("Roupas");
+
+
 -- Tabela de Produtos
 CREATE TABLE produtos (
     id INT AUTO_INCREMENT PRIMARY KEY,
