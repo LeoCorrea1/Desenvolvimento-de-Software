@@ -36,6 +36,10 @@ CREATE TABLE veiculo (
      foreign key(id_pessoa) references pessoa(id)
      );
 
+INSERT INTO veiculo (modelo,placa,id_pessoa)
+     VALUES
+    ("teste123","213CA32","2"),
+    ("carroRicardo","Tsd234","1");
 
 
 --NOVO BANCO DE DADOS ( SERA USADO NAS PROXIMAS AULAS )
