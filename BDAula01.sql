@@ -42,6 +42,23 @@ INSERT INTO veiculo (modelo,placa,id_pessoa)
     ("carroRicardo","Tsd234","1");
 
 
+-- Tabela de Categorias
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+-- Tabela de Produtos
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    quantidade INT NOT NULL,
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
+
 --NOVO BANCO DE DADOS ( SERA USADO NAS PROXIMAS AULAS )
 
 CREATE DATABASE escola;
