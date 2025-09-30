@@ -28,6 +28,15 @@ desc PESSOA;
 
 select * from PESSOA;
 
+CREATE TABLE veiculo (
+     id int AUTO_INCREMENT PRIMARY KEY,
+     modelo varchar(50) NOT NULL,
+     placa varchar(1) NOT NULL,
+     id_pessoa int NOT NULL,
+     foreign key(id_pessoa) references pessoa(id)
+     );
+
+
 
 --NOVO BANCO DE DADOS ( SERA USADO NAS PROXIMAS AULAS )
 
