@@ -121,6 +121,36 @@ select nome, curso FROM alunos;
 
 select nome , disciplina from professores;
 
+--NOVO BANCO PRODUTOS
+
+-- Tabela de Categorias
+
+
+
+-- Tabela de Produtos
+
+create database Vendas;
+use vendas;
+
+CREATE TABLE categorias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+
+INSERT INTO Categorias (nome) VALUES
+("Eletrônicos"),
+("Alimentos"),
+("Roupas");
+
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    quantidade INT NOT NULL,
+    categoria_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id)
+);
+
 
     
 
