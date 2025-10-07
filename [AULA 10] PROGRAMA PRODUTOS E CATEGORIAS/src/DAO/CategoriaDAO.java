@@ -47,26 +47,25 @@ public class CategoriaDAO {
     }
 
     public Categoria getCategoria(int id) {
-        String sql = "SELECT * FROM categorias WHERE id = ?";
-        try {
-            // Alterado para usar o tipo TYPE_SCROLL_INSENSITIVE
-            PreparedStatement stmt = conn.prepareStatement(sql, 
-                ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
+        Categoria categoria = null;
 
-            // Usar rs.first() para buscar o primeiro registro (isso só funciona com ResultSet de scroll)
-            if (rs.first()) {
-                Categoria c = new Categoria();
-                c.setId(rs.getInt("id"));
-                c.setNome(rs.getString("nome"));
-                return c;
+        String sql = "SELECT * FROM categoria WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                categoria = new Categoria();
+                categoria.setId(rs.getInt("id"));
+                categoria.setNome(rs.getString("nome"));
             }
 
-        } catch (SQLException ex) {
-            System.out.println("Erro ao buscar categoria: " + ex.getMessage());
+            rs.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar categoria: " + e.getMessage());
         }
-        return null;
+
+        return categoria;
     }
 
     public void editar(Categoria categoria) {
@@ -91,4 +90,6 @@ public class CategoriaDAO {
             System.out.println("Erro ao excluir categoria: " + ex.getMessage());
         }
     }
+    
 }
+    
