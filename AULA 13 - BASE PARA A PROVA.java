@@ -25,23 +25,18 @@ import java.net.*;
 /* ===========================================================
  * 1️⃣ Conexão com o Banco de Dados
  * =========================================================== */
-class ConnectionFactory {
-    private static final String URL = "jdbc:mysql://localhost:3306/escola";
-    private static final String USER = "root";
-    private static final String PASS = "";
-
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (Exception e) {
-            System.out.println("Driver JDBC não encontrado.");
+public class Conexao {
+    public Connection getConexao(){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/revisao?useTimezone=true&serverTimezone=UTC","root","leo231105");
+            System.out.println("Conexao realizada com sucesso! ");
+            return conn;
+        }
+        catch(Exception e){
+            System.out.println("Erro ao conectar ao BD "+e.getMessage());
+            return null;
         }
     }
-
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
-    }
-}
 
 /* ===========================================================
  * 2️⃣ Modelo — Professor e Disciplina
@@ -134,77 +129,6 @@ class ProfessorDAO {
 }
 
 /* ===========================================================
- * 4️⃣ Interfaces Swing
- * =========================================================== */
-
-// Tela de cadastro de professores
-class TelaProfessor extends JFrame {
-    private JTextField txtNome, txtEmail;
-    private JTable tabela;
-    private ProfessorDAO dao = new ProfessorDAO();
-
-    public TelaProfessor() {
-        setTitle("Cadastro de Professores");
-        setSize(400, 300);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLayout(new BorderLayout());
-
-        JPanel painel = new JPanel(new GridLayout(3, 2));
-        painel.add(new JLabel("Nome:"));
-        txtNome = new JTextField();
-        painel.add(txtNome);
-        painel.add(new JLabel("Email:"));
-        txtEmail = new JTextField();
-        painel.add(txtEmail);
-
-        JButton btnSalvar = new JButton("Salvar");
-        painel.add(btnSalvar);
-        add(painel, BorderLayout.NORTH);
-
-        tabela = new JTable(new DefaultTableModel(new Object[]{"ID","Nome","Email"}, 0));
-        add(new JScrollPane(tabela), BorderLayout.CENTER);
-
-        btnSalvar.addActionListener(e -> {
-            try {
-                Professor p = new Professor(0, txtNome.getText(), txtEmail.getText());
-                dao.inserir(p);
-                JOptionPane.showMessageDialog(this, "Professor salvo!");
-                atualizarTabela();
-            } catch (Exception ex) { ex.printStackTrace(); }
-        });
-    }
-
-    private void atualizarTabela() throws SQLException {
-        DefaultTableModel m = (DefaultTableModel) tabela.getModel();
-        m.setRowCount(0);
-        for (Professor p : dao.listar())
-            m.addRow(new Object[]{p.getId(), p.getNome(), p.getEmail()});
-    }
-}
-
-/* ===========================================================
- * 5️⃣ Menu Principal
- * =========================================================== */
-class MenuPrincipal extends JFrame {
-    public MenuPrincipal() {
-        setTitle("Menu Principal");
-        setSize(400, 200);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        JMenuBar barra = new JMenuBar();
-        JMenu menuCadastro = new JMenu("Cadastros");
-        JMenuItem itemProf = new JMenuItem("Professores");
-        JMenuItem itemDisc = new JMenuItem("Disciplinas");
-
-        itemProf.addActionListener(e -> new TelaProfessor().setVisible(true));
-        menuCadastro.add(itemProf);
-        menuCadastro.add(itemDisc);
-        barra.add(menuCadastro);
-        setJMenuBar(barra);
-    }
-}
-
-/* ===========================================================
  * 6️⃣ Servidor e Cliente Socket
  * =========================================================== */
 
@@ -240,14 +164,5 @@ class ClienteSocket {
         Professor prof = (Professor) in.readObject();
         JOptionPane.showMessageDialog(null, "Professor: " + prof.getNome() + "\nEmail: " + prof.getEmail());
         s.close();
-    }
-}
-
-/* ===========================================================
- * 7️⃣ Início do Sistema
- * =========================================================== */
-class App {
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new MenuPrincipal().setVisible(true));
     }
 }
